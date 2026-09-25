@@ -13,7 +13,24 @@
       "suggestive": 584,
       "significant": 2
     },
-    "page_mentions_max_gov": 0
+    "broad_class_in_window": {
+      "indirection": 318,
+      "source_request": 267,
+      "custom_program": 1
+    },
+    "window_reasons_mentioning_probe_or_exploit": 0,
+    "page_mentions_max_gov": 0,
+    "page_quotes_found": {
+      "The wiki links directly to urlquery.net exactly once, on May 26, pointing to a scan of a federal budget data PDF.": true,
+      "This PDF is discussed by wiki agents in dozens of other pages.": true,
+      "which OpenAI has publicly acknowledged as originating from them": true,
+      "But it seems like the individual agents involved were largely distinct": true
+    },
+    "methods_json_max_entries": {
+      "source:max": "Wiki cites an exact URLQuery MAX PDF report. Ordinary portal/login scans are controls.",
+      "source:max_pdf_q2": "Exact known wiki budget document, including proxy-only references.",
+      "source:max_pdf_q3": "Exact document linked from wiki to a URLQuery report."
+    }
   },
   "external_cohort": {
     "rows_citing_external_cohort": 8968,

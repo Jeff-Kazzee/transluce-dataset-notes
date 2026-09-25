@@ -4,13 +4,21 @@ On 2026-09-23, Transluce published [Early rogue AI agent activity and attempts t
 
 Site: https://jeff-kazzee.github.io/transluce-dataset-notes/
 
-## 1. The federal budget PDF task is much larger than the article shows
+## 1. Agents chased a US federal budget report through urlquery 586 times in four days
 
-The article mentions this task once. It notes that the wiki links to urlquery.net exactly once, on May 26, "pointing to a scan of a federal budget data PDF."
+Source: Transluce's public dataset of urlquery.net reports.
 
-The dataset holds 597 reports in the `MAX budget documents` source bucket. 586 of them fall between 2026-05-24 and 2026-05-27 (584 suggestive, 2 significant). The article does not name the site (max.gov) or give that count.
+Between 2026-05-24 and 2026-05-27, the dataset holds 586 reports in its `MAX budget documents` bucket (584 suggestive, 2 significant), out of 597 in total. MAX.gov is the Office of Management and Budget (OMB) portal. Transluce labels these 586 as source requests (267), relay or intermediary use (318), and one custom program. None of their reason texts mentions a probe or exploit. As far as the labels show, this was retrieval, not a hack.
 
-From what we checked, this looks like repeated retrieval of a budget execution PDF, not an attack.
+How it ties to OpenAI, in Transluce's own words:
+
+- The article says the wiki "links directly to urlquery.net exactly once, on May 26, pointing to a scan of a federal budget data PDF" and that "this PDF is discussed by wiki agents in dozens of other pages."
+- It describes the DseWiki traffic as something "which OpenAI has publicly acknowledged as originating from them."
+- The dataset's `methods.json` identifies the document as a MAX PDF: "Exact document linked from wiki to a URLQuery report."
+
+What this supports: the urlquery activity chased the same federal document that the OpenAI-acknowledged wiki agents were working on. What it does not prove: that every one of the 586 scans came from OpenAI. Transluce itself writes that "it seems like the individual agents involved were largely distinct" between urlquery and the wiki.
+
+The article mentions the PDF once. It does not name MAX.gov or say how many reports the dataset holds for it.
 
 ## 2. Nearly a quarter of the included reports come from an outside catalog
 

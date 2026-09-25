@@ -32,14 +32,16 @@ footer{margin-top:56px;color:var(--muted);font-size:.9rem;border-top:1px solid v
 <h1>Notes on Transluce's urlquery agent-activity dataset</h1>
 <p class="lede">Transluce <a href="https://transluce.org/agent-activity">published its report</a> on 2026-09-23 and asked readers to keep digging into the data. Here are three things we found in its public files. Every number comes from <a href="https://github.com/Jeff-Kazzee/transluce-dataset-notes/blob/main/scripts/verify_claims.py">one script</a> you can run yourself.</p>
 
-<h2>1. The federal budget PDF task is much larger than the article shows</h2>
-<p>The article mentions this task once. It notes that the wiki links to urlquery.net exactly once, on May 26, "pointing to a scan of a federal budget data PDF."</p>
+<h2>1. Agents chased a US federal budget report through urlquery 586 times in four days</h2>
+<p>Source: Transluce's public dataset of urlquery.net reports.</p>
 <div class="stat">
-<div><b>597</b><span>reports in the <code>MAX budget documents</code> bucket</span></div>
-<div><b>586</b><span>of them between May 24 and 27, 2026</span></div>
-<div><b>0</b><span>mentions of max.gov in the article</span></div>
+<div><b>586</b><span>reports in the <code>MAX budget documents</code> bucket, May 24 to 27, 2026</span></div>
+<div><b>MAX.gov</b><span>the Office of Management and Budget (OMB) portal</span></div>
+<div><b>0</b><span>mentions of MAX.gov or this count in the article</span></div>
 </div>
-<p>From what we checked, this looks like repeated retrieval of a budget execution PDF, not an attack.</p>
+<p>Transluce labels these 586 as source requests (267), relay or intermediary use (318), and one custom program. None of their reason texts mentions a probe or exploit. As far as the labels show, this was retrieval, not a hack.</p>
+<p><strong>How it ties to OpenAI, in Transluce's own words.</strong> The article says the wiki "links directly to urlquery.net exactly once, on May 26, pointing to a scan of a federal budget data PDF" and that "this PDF is discussed by wiki agents in dozens of other pages." It describes the DseWiki traffic as something "which OpenAI has publicly acknowledged as originating from them." The dataset's <code>methods.json</code> calls the document the "Exact document linked from wiki to a URLQuery report."</p>
+<p class="note">What this supports: the urlquery activity chased the same federal document that the OpenAI-acknowledged wiki agents were working on. What it does not prove: that every one of the 586 scans came from OpenAI. Transluce writes that "it seems like the individual agents involved were largely distinct" between urlquery and the wiki.</p>
 
 <h2>2. Nearly a quarter of the included reports come from an outside catalog</h2>
 <div class="stat">

@@ -14,6 +14,7 @@ import argparse
 import csv
 import hashlib
 import json
+import re
 from collections import Counter
 from datetime import date, datetime, timedelta
 from pathlib import Path
@@ -33,16 +34,32 @@ def load(dataset):
     return reports, sources
 
 
-def claim_max(reports, sources, page_text):
+# Passages from Transluce's article that the MAX claim relies on. Each must appear verbatim.
+PAGE_QUOTES = [
+    "The wiki links directly to urlquery.net exactly once, on May 26, pointing to a scan of a federal budget data PDF.",
+    "This PDF is discussed by wiki agents in dozens of other pages.",
+    "which OpenAI has publicly acknowledged as originating from them",
+    "But it seems like the individual agents involved were largely distinct",
+]
+
+
+def claim_max(reports, sources, page_text, dataset):
     by_id = {r["report_id"]: r for r in reports}
     rows = [by_id[s["report_id"]] for s in sources if s["data_source"] == "MAX budget documents"]
     window = [r for r in rows if "2026-05-24" <= r["report_date_utc"][:10] <= "2026-05-27"]
+    methods = json.load(open(Path(dataset) / "methods.json", encoding="utf-8"))
+    # Link markup leaves a space before some punctuation in the saved text.
+    flat = re.sub(r"\s+([,.;:])", r"\1", " ".join(page_text.split()))
     return {
         "source_bucket": "MAX budget documents",
         "reports": len(rows),
         "reports_2026_05_24_to_27": len(window),
         "confidence_in_window": dict(Counter(r["confidence"] for r in window)),
+        "broad_class_in_window": dict(Counter(r["broad_class"] for r in window)),
+        "window_reasons_mentioning_probe_or_exploit": sum(("probe" in r["why_included"].lower()) or ("exploit" in r["why_included"].lower()) for r in window),
         "page_mentions_max_gov": page_text.lower().count("max.gov"),
+        "page_quotes_found": {q: q in flat for q in PAGE_QUOTES},
+        "methods_json_max_entries": {m["id"]: m["reason"] for m in methods if m["id"].startswith("source:max")},
     }
 
 
@@ -108,7 +125,7 @@ def main():
             "page_text": sha256(a.page),
             **({"explorer": sha256(a.explorer)} if a.explorer else {}),
         },
-        "max_budget_documents": claim_max(reports, sources, page_text),
+        "max_budget_documents": claim_max(reports, sources, page_text, a.dataset),
         "external_cohort": claim_cohort(reports, a.explorer),
         "continuous_run": claim_run(reports),
     }
