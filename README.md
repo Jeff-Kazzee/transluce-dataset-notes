@@ -1,62 +1,54 @@
-# Notes on Transluce's urlquery agent-activity dataset
+# What's in Transluce's agent dataset that the article doesn't say
 
-On 2026-09-23, Transluce published [Early rogue AI agent activity and attempts to hack found on urlquery.net](https://transluce.org/agent-activity) and released the dataset behind it. They asked readers to keep digging. These are three things we found in their public files. Each number below comes from one script, `scripts/verify_claims.py`, which you can run yourself.
+On September 23, 2026, Transluce published [its report on AI agents that used urlquery.net](https://transluce.org/agent-activity) to get around blocks and sometimes probe websites. They released the data and asked people to keep digging, so I did. Everything below comes from their own files. One script, `scripts/verify_claims.py`, recomputes every number and checks every quote. Run it instead of trusting me.
 
 Site: https://jeff-kazzee.github.io/transluce-dataset-notes/
 
-## 1. Agents chased a US federal budget report through urlquery 586 times in four days
+## Agents requested a federal budget report 586 times in four days
 
-Source: Transluce's public dataset of urlquery.net reports.
+From May 24 to May 27, 2026, Transluce's dataset has 586 urlquery reports tagged `MAX budget documents`. MAX.gov is the portal of the Office of Management and Budget (OMB). The article mentions this task once, as a single wiki link to "a scan of a federal budget data PDF." It doesn't name MAX.gov or give the count.
 
-Between 2026-05-24 and 2026-05-27, the dataset holds 586 reports in its `MAX budget documents` bucket (584 suggestive, 2 significant), out of 597 in total. MAX.gov is the Office of Management and Budget (OMB) portal. Transluce labels these 586 as source requests (267), relay or intermediary use (318), and one custom program. None of their reason texts mentions a probe or exploit. As far as the labels show, this was retrieval, not a hack.
+Transluce tags 267 of these reports as source requests, 318 as relay use, and 1 as a custom program. None of their notes on these reports mention a probe or an exploit. The agents asked for the same document over and over.
 
-How it ties to OpenAI, in Transluce's own words:
+The OpenAI link comes from Transluce's write-up. They say this PDF "is discussed by wiki agents in dozens of other pages," and they describe that wiki traffic as something "which OpenAI has publicly acknowledged as originating from them." Their `methods.json` calls the PDF the "Exact document linked from wiki to a URLQuery report."
 
-- The article says the wiki "links directly to urlquery.net exactly once, on May 26, pointing to a scan of a federal budget data PDF" and that "this PDF is discussed by wiki agents in dozens of other pages."
-- It describes the DseWiki traffic as something "which OpenAI has publicly acknowledged as originating from them."
-- The dataset's `methods.json` identifies the document as a MAX PDF: "Exact document linked from wiki to a URLQuery report."
+So the shared document ties this task to the OpenAI swarm. Transluce also writes that the urlquery agents and the wiki agents look "largely distinct," so I can't say OpenAI sent all 586 requests.
 
-What this supports: the urlquery activity chased the same federal document that the OpenAI-acknowledged wiki agents were working on. What it does not prove: that every one of the 586 scans came from OpenAI. Transluce itself writes that "it seems like the individual agents involved were largely distinct" between urlquery and the wiki.
+## A quarter of the dataset comes from an outside catalog
 
-The article mentions the PDF once. It does not name MAX.gov or say how many reports the dataset holds for it.
+8,968 of the 37,649 included reports carry the note "Member of the externally selected research-activity cohort." Transluce's `methods.json` names the source of that cohort, a "research activity explorer" at `research-activity-september-2026.tuxianeer.chatgpt.site`, dated September 21, 2026. All 8,968 reviewed urlquery rows in that explorer are in Transluce's dataset.
 
-## 2. Nearly a quarter of the included reports come from an outside catalog
+The article doesn't mention the explorer. The credit appears only in the data files.
 
-8,968 of the 37,649 included reports (24%) carry the reason "Member of the externally selected research-activity cohort." The dataset's `methods.json` names the source: a "research activity explorer" at `research-activity-september-2026.tuxianeer.chatgpt.site`, dated 2026-09-21. All 8,968 reviewed urlquery rows in that explorer appear in the dataset.
+Transluce includes 229 of those rows even though their own note starts "Explicit reference or discovery candidate; relation to an agent-like workflow needs review." It rates 113 of the 229 as significant.
 
-- The article text does not mention the explorer or the cohort. The credit is in the data files.
-- 229 of these included rows have reason text that begins "Explicit reference or discovery candidate; relation to an agent-like workflow needs review." 113 of them are rated significant.
-- Every significant row that cites the cohort also lists other evidence. This does not show that the significant set rests on the explorer alone.
+Every significant row that cites the outside cohort also lists other evidence, so the significant set doesn't rest on the explorer alone. The two catalogs still aren't independent. If you see them agree, you're looking at one selection counted twice.
 
-Why it matters: readers who treat the dataset and the explorer as two independent sources would be counting the same selection twice.
+## The activity ran 57 days without a gap
 
-## 3. The activity ran 57 days without a break
+Every UTC day from April 26 through June 21, 2026, has at least 10 included reports. June 22 has none. The article describes a May and June peak that collapses on June 22. It doesn't say that the run never skipped a day or that it started on April 26.
 
-From 2026-04-26 to 2026-06-21, every UTC day has at least 10 included reports. On 2026-06-22 there are none. Since March 1, Sunday has the most active days (19) and Tuesday the fewest (12). There is no weekend dip.
+Weekends show no drop. Since March 1, Sunday has the most active days (19) and Tuesday the fewest (12).
 
-The article describes a May and June peak that collapses on June 22. The unbroken run and its start date are not in the text.
+## Open questions
 
-## Open questions, not findings
+Some reports on the same tasks seem to fall outside the dataset because the search patterns miss domain variants. For example, the pattern `*whssgr.com*` in `methods.json` doesn't match `whssgrgupkar.com`. My counts for these come from urlquery search results, and I haven't checked them record by record. I'm listing them as questions, not findings.
 
-Some reports on the same tasks may sit outside the dataset because the search patterns miss domain variants. For example, the pattern `*whssgr.com*` in `methods.json` does not match `whssgrgupkar.com`. Other cases include percent-encoded URLs. Our counts for these come from urlquery search results and are not yet verified record by record, so we list them as questions only.
+## Check the numbers
 
-## Reproduce
-
-1. Download Transluce's dataset package from their page and unzip it into `data/`.
-2. Save the article text to `data/agent-activity.txt`. Our copy, fetched 2026-09-25, has SHA-256 `b82ec342e6d313384c44bbf1abac993114638684579aedeb4e57472869a57908`.
-3. Optional: save the explorer's data JSON to `data/tux_data.json` for the cross-check in claim 2.
-4. Run:
+1. Download Transluce's dataset from their page and unzip it into `data/`.
+2. Save the article text as `data/agent-activity.txt`. My copy from September 25, 2026, has SHA-256 `b82ec342e6d313384c44bbf1abac993114638684579aedeb4e57472869a57908`.
+3. For the explorer cross-check, save its data JSON as `data/tux_data.json`.
+4. Run the script:
 
    ```
    python scripts/verify_claims.py --dataset data/urlquery-agent-activity-2026-09-22-v5 --page data/agent-activity.txt --explorer data/tux_data.json
    ```
 
-`results/claims.json` holds our output, including SHA-256 hashes of every input file.
+`results/claims.json` holds my output and the SHA-256 hash of every input.
 
 ## Limits
 
-- "Not in the article" means no match in our saved copy of the page text. The page may change.
-- We searched news coverage, Hacker News, and the web on 2026-09-25 and found no prior write-up of these points. Absence of results does not prove nobody published them.
-- We have no affiliation with Transluce. Corrections are welcome as issues.
+"Not in the article" means I couldn't find it in my saved copy of the page. The page can change. On September 25, 2026, I searched news coverage, Hacker News, and the web and found no one else writing about these points. That doesn't prove no one has. I'm not affiliated with Transluce. If I got something wrong, open an issue.
 
-Code: MIT. Text: CC BY 4.0.
+Code is MIT. Text is CC BY 4.0. By Jeff Kazzee.
