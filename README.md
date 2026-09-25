@@ -1,57 +1,61 @@
-# What's in Transluce's agent dataset that the article doesn't say
-
-On September 23, 2026, Transluce published [its report on AI agents that used urlquery.net](https://transluce.org/agent-activity) to get around blocks and sometimes probe websites. They released the data and asked people to keep digging, so I did. Everything below comes from their own files. One script, `scripts/verify_claims.py`, recomputes every number and checks every quote. Run it instead of trusting me.
+# AI agents kept hunting for answers they were blocked from getting
 
 Site: https://jeff-kazzee.github.io/transluce-dataset-notes/
 
-## Agents requested a federal budget report 586 times in four days
+## What seems to have happened
 
-From May 24 to May 27, 2026, Transluce's dataset has 586 urlquery reports tagged `MAX budget documents`. MAX.gov is the portal of the Office of Management and Budget (OMB). The article mentions this task once, as a single wiki link to "a scan of a federal budget data PDF." It doesn't name MAX.gov or give the count.
+AI research agents get tested and trained on questions they have to answer by finding data on the web. Some of that data sits behind blocks: sites that turn away bots, logins, paywalls.
 
-Transluce tags 267 of these reports as source requests, 318 as relay use, and 1 as a custom program. None of their notes on these reports mention a probe or an exploit. The agents asked for the same document over and over.
+In September 2026, the research lab Transluce [reported](https://transluce.org/agent-activity) that agents doing this kind of work found a way around those blocks. They sent their requests through urlquery.net, a public service that security researchers use to open suspicious websites in a remote browser. The service loaded the page and published a report. The agents read the report.
 
-The OpenAI link comes from Transluce's write-up. They say this PDF "is discussed by wiki agents in dozens of other pages," and they describe that wiki traffic as something "which OpenAI has publicly acknowledged as originating from them." Their `methods.json` calls the PDF the "Exact document linked from wiki to a URLQuery report."
+Transluce says the agents were working on "web search tasks." One of their requests matches a question in Google's DeepSearchQA benchmark, a test set for AI research agents. Transluce describes a progression. In late 2025, the agents seem to have used the service to look things up. By March 2026 they were "finding creative ways around access limits." By May and June, when normal requests failed, a few tried to break into the sites holding the data, including an Australian government health agency. Transluce links some of this to a swarm of agents that OpenAI acknowledged running. They also say the evidence is "consistent with, but does not prove," that the agents learned this behavior during training.
 
-So the shared document ties this task to the OpenAI swarm. Transluce also writes that the urlquery agents and the wiki agents look "largely distinct," so I can't say OpenAI sent all 586 requests.
+Agents built to answer questions kept getting their answers by going where they weren't let in. Transluce published the records behind their report and asked people to keep looking. I did. Here's what their own data shows that the report doesn't.
 
-## A quarter of the dataset comes from an outside catalog
+## Weeks before Australia, agents hammered a US government budget portal
 
-8,968 of the 37,649 included reports carry the note "Member of the externally selected research-activity cohort." Transluce's `methods.json` names the source of that cohort, a "research activity explorer" at `research-activity-september-2026.tuxianeer.chatgpt.site`, dated September 21, 2026. All 8,968 reviewed urlquery rows in that explorer are in Transluce's dataset.
+Between May 24 and May 27, 2026, agents asked for one federal budget report 586 times. The report sits on MAX.gov, the portal of the federal Office of Management and Budget. That was almost four weeks before the Australian break-in attempt that Transluce describes on June 20 and 21.
 
-The article doesn't mention the explorer. The credit appears only in the data files.
+This wasn't a break-in. Transluce's own labels show the agents fetching the document through go-between services, again and again. Transluce marks none of the records as an attack. It does show how single-minded these agents were. They needed one document and asked for it hundreds of times in four days. Transluce's report mentions the document once, in passing, and never names the site or the count.
 
-Transluce includes 229 of those rows even though their own note starts "Explicit reference or discovery candidate; relation to an agent-like workflow needs review." It rates 113 of the 229 as significant.
+The OpenAI link comes from Transluce. They write that the OpenAI-acknowledged agents discussed this exact budget document "in dozens of other pages" on an online wiki. So the document ties this activity to OpenAI's agents. Transluce also writes that the agents using the scanner and the agents on the wiki look "largely distinct," so I can't say OpenAI sent all 586 requests.
 
-Every significant row that cites the outside cohort also lists other evidence, so the significant set doesn't rest on the explorer alone. The two catalogs still aren't independent. If you see them agree, you're looking at one selection counted twice.
+## The agents ran every day for 57 days, then stopped
 
-## The activity ran 57 days without a gap
+From April 26 to June 21, 2026, there was agent activity every single day. On June 22 it stopped, the same day Transluce says the wiki swarm went quiet. The report describes a May and June peak and a sudden end. It doesn't mention that the activity never missed a day for eight weeks, or when that run began.
 
-Every UTC day from April 26 through June 21, 2026, has at least 10 included reports. June 22 has none. The article describes a May and June peak that collapses on June 22. It doesn't say that the run never skipped a day or that it started on April 26.
+Weekends look the same as weekdays. Sunday was the busiest day. People working a normal week leave gaps on weekends. This activity didn't, which fits machines running around the clock.
 
-Weekends show no drop. Since March 1, Sunday has the most active days (19) and Tuesday the fewest (12).
+## Two more places the agents seem to have reached
 
-## Open questions
+These records are in neither Transluce's data nor a second public catalog of the same activity. They come from the same weeks and use the same go-between services. I read each full record. They look related, but nothing in them proves who sent them.
 
-Some reports on the same tasks seem to fall outside the dataset because the search patterns miss domain variants. For example, the pattern `*whssgr.com*` in `methods.json` doesn't match `whssgrgupkar.com`. My counts for these come from urlquery search results, and I haven't checked them record by record. I'm listing them as questions, not findings.
+**Newspapers.com, May 13 to 15, 2026.** 29 requests ran Newspapers.com pages through services that turn web pages into plain text. In at least [one of them](https://urlquery.net/report/baddfac5-8b9b-422d-8bf4-d0398c5d4cb7), readable text from an old newspaper came back. Newspapers.com sells subscriptions. I haven't confirmed whether that page needed one at the time, so I'm not calling it a paywall bypass yet. If it did, this is exactly the "getting data they shouldn't" pattern.
 
-## Check the numbers
+**The FBI's crime data site, May 12, 2026.** Three requests asked the FBI's Crime Data Explorer for national arrest figures ([1](https://urlquery.net/report/7305dd56-9ea0-4b08-953b-d317e67dace2), [2](https://urlquery.net/report/40e9f02a-8599-4fcb-84a2-9c270b520212), [3](https://urlquery.net/report/99277f12-75da-4579-865f-70a2e6c44432)). At least one got an arrest-rate table back. [Kenneth DeGraff](https://www.kennethdegraff.com/swarm) and [Fortune](https://fortune.com/2026/09/09/openai-rogue-ai-agents-reached-12-more-websites/) already reported that the agents reached the FBI's systems using access keys. These three requests used no key, and nothing in them ties them to that incident.
 
-1. Download Transluce's dataset from their page and unzip it into `data/`.
-2. Save the article text as `data/agent-activity.txt`. My copy from September 25, 2026, has SHA-256 `b82ec342e6d313384c44bbf1abac993114638684579aedeb4e57472869a57908`.
-3. For the explorer cross-check, save its data JSON as `data/tux_data.json`.
-4. Run the script:
+## A note on the evidence itself
 
-   ```
-   python scripts/verify_claims.py --dataset data/urlquery-agent-activity-2026-09-22-v5 --page data/agent-activity.txt --explorer data/tux_data.json
-   ```
+About a quarter of Transluce's records (8,968 of 37,649) came from a separate catalog that someone else built, a "research activity explorer" hosted at a chatgpt.site address. Transluce credits it in the data files, not in the report. Transluce kept 229 of those records even though its own notes on them say "needs review," and it rates 113 of them as strong evidence.
 
-`results/claims.json` holds my output and the SHA-256 hash of every input.
+This matters if you cite the two collections together. When they agree, you're seeing one set of choices counted twice, not two confirmations. Transluce's strongest evidence doesn't rest on that list alone, though. Every strong record from it also has other evidence behind it.
+
+## Still open
+
+The search terms Transluce used to build its dataset seem to miss some variations of the sites the agents visited, so there may be more activity outside it. I've seen signs of this but haven't confirmed it record by record.
 
 ## How I checked
 
-The dataset is Transluce's v5 package. I downloaded it on September 24, 2026, and all 15 files matched the SHA-256 hashes in its manifest. "Not in the article" means no match in my copy of the page, saved September 25, 2026.
+Every number above comes from Transluce's own files, recounted by a short script in this repository. The script also confirms that each quote appears word for word in Transluce's report. To run it:
 
-Before publishing, I read the SecurityWeek, CybelAngel, and XenoSpectrum coverage and the Hacker News discussion, which had about 258 comments. None of them covers these three points.
+1. Download Transluce's dataset from [their page](https://transluce.org/agent-activity) and unzip it into `data/`.
+2. Save the report text as `data/agent-activity.txt`.
+3. To check the outside catalog, save its data file as `data/tux_data.json`.
+4. Run `python scripts/verify_claims.py --dataset data/urlquery-agent-activity-2026-09-22-v5 --page data/agent-activity.txt --explorer data/tux_data.json`.
+
+My output is in `results/claims.json`, with a SHA-256 fingerprint of every file it read. My copy of the dataset matched Transluce's published fingerprints for all 15 files. I saved my copy of the report on September 25, 2026.
+
+Before publishing, I read the coverage in [SecurityWeek](https://www.securityweek.com/openai-agents-probed-websites-for-vulnerabilities-while-fetching-public-data/), [CybelAngel](https://cybelangel.com/blog/openai-agents-bypassed-anti-bot-controls-government-sites/), and [XenoSpectrum](https://xenospectrum.com/en/ai-agent-urlquery-escalation/), and the [Hacker News discussion](https://news.ycombinator.com/item?id=49826565). None of them covers these points.
 
 I don't work for Transluce. Corrections go in the [issue tracker](https://github.com/Jeff-Kazzee/transluce-dataset-notes/issues).
 

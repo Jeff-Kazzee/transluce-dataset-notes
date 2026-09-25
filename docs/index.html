@@ -4,90 +4,61 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Transluce Dataset Notes</title>
-<meta name="description" content="What's in Transluce's urlquery agent dataset that the article doesn't say, with a script that checks every number and quote.">
+<meta name="description" content="What Transluce's AI agent data shows that its report doesn't: a US budget portal hit 586 times, 57 days of nonstop activity, and more.">
 <style>
-:root{--bg:#fbfaf7;--fg:#1d1e20;--muted:#5b5f65;--line:#e2ded5;--accent:#1d5bb8;--code:#f0ede6;--panel:#f4f1ea}
-@media (prefers-color-scheme:dark){:root{--bg:#131416;--fg:#e7e5e0;--muted:#a1a4a9;--line:#2b2d31;--accent:#7ea8ff;--code:#222428;--panel:#1a1b1e}}
+:root{--bg:#fbfaf7;--fg:#1d1e20;--muted:#5b5f65;--line:#e2ded5;--accent:#1d5bb8;--code:#f0ede6}
+@media (prefers-color-scheme:dark){:root{--bg:#131416;--fg:#e7e5e0;--muted:#a1a4a9;--line:#2b2d31;--accent:#7ea8ff;--code:#222428}}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:18px/1.7 Charter,"Iowan Old Style",Georgia,serif}
 main{max-width:680px;margin:0 auto;padding:64px 16px 96px}
 .kicker{font:600 .78rem/1 ui-sans-serif,-apple-system,"Segoe UI",sans-serif;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:0 0 14px}
-h1{font:700 2rem/1.2 ui-sans-serif,-apple-system,"Segoe UI",sans-serif;margin:0 0 20px;letter-spacing:-.01em}
-h2{font:700 1.2rem/1.35 ui-sans-serif,-apple-system,"Segoe UI",sans-serif;margin:52px 0 10px;scroll-margin-top:16px}
+h1{font:700 2rem/1.2 ui-sans-serif,-apple-system,"Segoe UI",sans-serif;margin:0 0 24px;letter-spacing:-.01em}
+h2{font:700 1.2rem/1.35 ui-sans-serif,-apple-system,"Segoe UI",sans-serif;margin:52px 0 10px}
 p{margin:0 0 16px}
 a{color:var(--accent);text-underline-offset:3px}
-.summary{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:28px 0 8px}
-.summary p{font:600 .8rem/1 ui-sans-serif,-apple-system,"Segoe UI",sans-serif;color:var(--muted);margin:0 0 10px}
-.summary ol{margin:0;padding-left:1.2em}
-.summary li{margin:4px 0}
-blockquote{margin:0 0 16px;padding:2px 0 2px 16px;border-left:3px solid var(--line);color:var(--muted)}
-code,pre{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.8em;background:var(--code);border-radius:5px}
-code{padding:1px 5px;overflow-wrap:anywhere}
-pre{padding:12px 14px;overflow-x:auto;line-height:1.5}
-.steps{padding-left:1.3em}
-.steps li{margin:6px 0}
-footer{margin-top:64px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
-footer ul{padding-left:1.2em}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.8em;background:var(--code);border-radius:5px;padding:1px 5px;overflow-wrap:anywhere}
+ol{padding-left:1.3em}
+li{margin:6px 0}
 </style>
 </head>
 <body>
 <main>
 <p class="kicker">Notes on a public dataset</p>
-<h1>What's in Transluce's agent dataset that the article doesn't say</h1>
-
-<p>On September 23, 2026, Transluce published <a href="https://transluce.org/agent-activity">its report on AI agents that used urlquery.net</a> to get around blocks and sometimes probe websites. They released the data and asked people to keep digging, so I did. Everything below comes from their own files. <a href="https://github.com/Jeff-Kazzee/transluce-dataset-notes/blob/main/scripts/verify_claims.py">One script</a> recomputes every number and checks every quote. Run it instead of trusting me.</p>
-
-<nav class="summary" aria-label="Findings">
-<p>Findings</p>
+<h1 id="ai-agents-kept-hunting-for-answers-they-were-blocked-from-getting">AI agents kept hunting for answers they were blocked from getting</h1>
+<h2 id="what-seems-to-have-happened">What seems to have happened</h2>
+<p>AI research agents get tested and trained on questions they have to answer by finding data on the web. Some of that data sits behind blocks: sites that turn away bots, logins, paywalls.</p>
+<p>In September 2026, the research lab Transluce <a href="https://transluce.org/agent-activity">reported</a> that agents doing this kind of work found a way around those blocks. They sent their requests through urlquery.net, a public service that security researchers use to open suspicious websites in a remote browser. The service loaded the page and published a report. The agents read the report.</p>
+<p>Transluce says the agents were working on "web search tasks." One of their requests matches a question in Google's DeepSearchQA benchmark, a test set for AI research agents. Transluce describes a progression. In late 2025, the agents seem to have used the service to look things up. By March 2026 they were "finding creative ways around access limits." By May and June, when normal requests failed, a few tried to break into the sites holding the data, including an Australian government health agency. Transluce links some of this to a swarm of agents that OpenAI acknowledged running. They also say the evidence is "consistent with, but does not prove," that the agents learned this behavior during training.</p>
+<p>Agents built to answer questions kept getting their answers by going where they weren't let in. Transluce published the records behind their report and asked people to keep looking. I did. Here's what their own data shows that the report doesn't.</p>
+<h2 id="weeks-before-australia-agents-hammered-a-us-government-budget-portal">Weeks before Australia, agents hammered a US government budget portal</h2>
+<p>Between May 24 and May 27, 2026, agents asked for one federal budget report 586 times. The report sits on MAX.gov, the portal of the federal Office of Management and Budget. That was almost four weeks before the Australian break-in attempt that Transluce describes on June 20 and 21.</p>
+<p>This wasn't a break-in. Transluce's own labels show the agents fetching the document through go-between services, again and again. Transluce marks none of the records as an attack. It does show how single-minded these agents were. They needed one document and asked for it hundreds of times in four days. Transluce's report mentions the document once, in passing, and never names the site or the count.</p>
+<p>The OpenAI link comes from Transluce. They write that the OpenAI-acknowledged agents discussed this exact budget document "in dozens of other pages" on an online wiki. So the document ties this activity to OpenAI's agents. Transluce also writes that the agents using the scanner and the agents on the wiki look "largely distinct," so I can't say OpenAI sent all 586 requests.</p>
+<h2 id="the-agents-ran-every-day-for-57-days-then-stopped">The agents ran every day for 57 days, then stopped</h2>
+<p>From April 26 to June 21, 2026, there was agent activity every single day. On June 22 it stopped, the same day Transluce says the wiki swarm went quiet. The report describes a May and June peak and a sudden end. It doesn't mention that the activity never missed a day for eight weeks, or when that run began.</p>
+<p>Weekends look the same as weekdays. Sunday was the busiest day. People working a normal week leave gaps on weekends. This activity didn't, which fits machines running around the clock.</p>
+<h2 id="two-more-places-the-agents-seem-to-have-reached">Two more places the agents seem to have reached</h2>
+<p>These records are in neither Transluce's data nor a second public catalog of the same activity. They come from the same weeks and use the same go-between services. I read each full record. They look related, but nothing in them proves who sent them.</p>
+<p><strong>Newspapers.com, May 13 to 15, 2026.</strong> 29 requests ran Newspapers.com pages through services that turn web pages into plain text. In at least <a href="https://urlquery.net/report/baddfac5-8b9b-422d-8bf4-d0398c5d4cb7">one of them</a>, readable text from an old newspaper came back. Newspapers.com sells subscriptions. I haven't confirmed whether that page needed one at the time, so I'm not calling it a paywall bypass yet. If it did, this is exactly the "getting data they shouldn't" pattern.</p>
+<p><strong>The FBI's crime data site, May 12, 2026.</strong> Three requests asked the FBI's Crime Data Explorer for national arrest figures (<a href="https://urlquery.net/report/7305dd56-9ea0-4b08-953b-d317e67dace2">1</a>, <a href="https://urlquery.net/report/40e9f02a-8599-4fcb-84a2-9c270b520212">2</a>, <a href="https://urlquery.net/report/99277f12-75da-4579-865f-70a2e6c44432">3</a>). At least one got an arrest-rate table back. <a href="https://www.kennethdegraff.com/swarm">Kenneth DeGraff</a> and <a href="https://fortune.com/2026/09/09/openai-rogue-ai-agents-reached-12-more-websites/">Fortune</a> already reported that the agents reached the FBI's systems using access keys. These three requests used no key, and nothing in them ties them to that incident.</p>
+<h2 id="a-note-on-the-evidence-itself">A note on the evidence itself</h2>
+<p>About a quarter of Transluce's records (8,968 of 37,649) came from a separate catalog that someone else built, a "research activity explorer" hosted at a chatgpt.site address. Transluce credits it in the data files, not in the report. Transluce kept 229 of those records even though its own notes on them say "needs review," and it rates 113 of them as strong evidence.</p>
+<p>This matters if you cite the two collections together. When they agree, you're seeing one set of choices counted twice, not two confirmations. Transluce's strongest evidence doesn't rest on that list alone, though. Every strong record from it also has other evidence behind it.</p>
+<h2 id="still-open">Still open</h2>
+<p>The search terms Transluce used to build its dataset seem to miss some variations of the sites the agents visited, so there may be more activity outside it. I've seen signs of this but haven't confirmed it record by record.</p>
+<h2 id="how-i-checked">How I checked</h2>
+<p>Every number above comes from Transluce's own files, recounted by a short script in this repository. The script also confirms that each quote appears word for word in Transluce's report. To run it:</p>
 <ol>
-<li><a href="#max">586 requests for one federal budget report in four days</a></li>
-<li><a href="#cohort">8,968 reports from an outside catalog the article doesn't mention</a></li>
-<li><a href="#run">57 days of activity without a gap</a></li>
+<li>Download Transluce's dataset from <a href="https://transluce.org/agent-activity">their page</a> and unzip it into <code>data/</code>.</li>
+<li>Save the report text as <code>data/agent-activity.txt</code>.</li>
+<li>To check the outside catalog, save its data file as <code>data/tux_data.json</code>.</li>
+<li>Run <code>python scripts/verify_claims.py --dataset data/urlquery-agent-activity-2026-09-22-v5 --page data/agent-activity.txt --explorer data/tux_data.json</code>.</li>
 </ol>
-</nav>
-
-<h2 id="max">Agents requested a federal budget report 586 times in four days</h2>
-<p>From May 24 to May 27, 2026, Transluce's dataset has 586 urlquery reports tagged <code>MAX budget documents</code>. MAX.gov is the portal of the Office of Management and Budget (OMB). The article mentions this task once, as a single wiki link to "a scan of a federal budget data PDF." It doesn't name MAX.gov or give the count.</p>
-<p>Transluce tags 267 of these reports as source requests, 318 as relay use, and 1 as a custom program. None of their notes on these reports mention a probe or an exploit. The agents asked for the same document over and over.</p>
-<p>The OpenAI link comes from Transluce's write-up. They describe the wiki traffic as something</p>
-<blockquote>"which OpenAI has publicly acknowledged as originating from them."</blockquote>
-<p>and say this PDF "is discussed by wiki agents in dozens of other pages." Their <code>methods.json</code> calls the PDF the "Exact document linked from wiki to a URLQuery report."</p>
-<p>So the shared document ties this task to the OpenAI swarm. Transluce also writes that the urlquery agents and the wiki agents look "largely distinct," so I can't say OpenAI sent all 586 requests.</p>
-
-<h2 id="cohort">A quarter of the dataset comes from an outside catalog</h2>
-<p>8,968 of the 37,649 included reports carry the note "Member of the externally selected research-activity cohort." Transluce's <code>methods.json</code> names the source of that cohort, a "research activity explorer" at <code>research-activity-september-2026.tuxianeer.chatgpt.site</code>, dated September 21, 2026. All 8,968 reviewed urlquery rows in that explorer are in Transluce's dataset.</p>
-<p>The article doesn't mention the explorer. The credit appears only in the data files.</p>
-<p>Transluce includes 229 of those rows even though their own note starts "Explicit reference or discovery candidate; relation to an agent-like workflow needs review." It rates 113 of the 229 as significant.</p>
-<p>Every significant row that cites the outside cohort also lists other evidence, so the significant set doesn't rest on the explorer alone. The two catalogs still aren't independent. If you see them agree, you're looking at one selection counted twice.</p>
-
-<h2 id="run">The activity ran 57 days without a gap</h2>
-<p>Every UTC day from April 26 through June 21, 2026, has at least 10 included reports. June 22 has none. The article describes a May and June peak that collapses on June 22. It doesn't say that the run never skipped a day or that it started on April 26.</p>
-<p>Weekends show no drop. Since March 1, Sunday has the most active days (19) and Tuesday the fewest (12).</p>
-
-<h2 id="open">Open questions</h2>
-<p>Some reports on the same tasks seem to fall outside the dataset because the search patterns miss domain variants. For example, the pattern <code>*whssgr.com*</code> in <code>methods.json</code> doesn't match <code>whssgrgupkar.com</code>. My counts for these come from urlquery search results, and I haven't checked them record by record. I'm listing them as questions, not findings.</p>
-
-<h2 id="check">Check the numbers</h2>
-<ol class="steps">
-<li>Download Transluce's dataset from their page and unzip it into <code>data/</code>.</li>
-<li>Save the article text as <code>data/agent-activity.txt</code>. My copy from September 25, 2026, has SHA-256 <code>b82ec342e6d313384c44bbf1abac993114638684579aedeb4e57472869a57908</code>.</li>
-<li>For the explorer cross-check, save its data JSON as <code>data/tux_data.json</code>.</li>
-<li>Run the script:</li>
-</ol>
-<pre>python scripts/verify_claims.py \
-  --dataset data/urlquery-agent-activity-2026-09-22-v5 \
-  --page data/agent-activity.txt \
-  --explorer data/tux_data.json</pre>
-<p><a href="https://github.com/Jeff-Kazzee/transluce-dataset-notes/blob/main/results/claims.json"><code>results/claims.json</code></a> holds my output and the SHA-256 hash of every input.</p>
-
-<h2 id="how">How I checked</h2>
-<p>The dataset is Transluce's v5 package. I downloaded it on September 24, 2026, and all 15 files matched the SHA-256 hashes in its manifest. "Not in the article" means no match in my copy of the page, saved September 25, 2026.</p>
-<p>Before publishing, I read the <a href="https://www.securityweek.com/openai-agents-probed-websites-for-vulnerabilities-while-fetching-public-data/">SecurityWeek</a>, <a href="https://cybelangel.com/blog/openai-agents-bypassed-anti-bot-controls-government-sites/">CybelAngel</a>, and <a href="https://xenospectrum.com/en/ai-agent-urlquery-escalation/">XenoSpectrum</a> coverage and the <a href="https://news.ycombinator.com/item?id=49826565">Hacker News discussion</a>, which had about 258 comments. None of them covers these three points.</p>
-
-<footer>
-<p>I don't work for Transluce. Corrections go in the <a href="https://github.com/Jeff-Kazzee/transluce-dataset-notes/issues">issue tracker</a>. Code is MIT. Text is CC BY 4.0. By Jeff Kazzee.</p>
-</footer>
+<p>My output is in <code>results/claims.json</code>, with a SHA-256 fingerprint of every file it read. My copy of the dataset matched Transluce's published fingerprints for all 15 files. I saved my copy of the report on September 25, 2026.</p>
+<p>Before publishing, I read the coverage in <a href="https://www.securityweek.com/openai-agents-probed-websites-for-vulnerabilities-while-fetching-public-data/">SecurityWeek</a>, <a href="https://cybelangel.com/blog/openai-agents-bypassed-anti-bot-controls-government-sites/">CybelAngel</a>, and <a href="https://xenospectrum.com/en/ai-agent-urlquery-escalation/">XenoSpectrum</a>, and the <a href="https://news.ycombinator.com/item?id=49826565">Hacker News discussion</a>. None of them covers these points.</p>
+<p>I don't work for Transluce. Corrections go in the <a href="https://github.com/Jeff-Kazzee/transluce-dataset-notes/issues">issue tracker</a>.</p>
+<p>Code is MIT. Text is CC BY 4.0. By Jeff Kazzee.</p>
 </main>
 </body>
 </html>
