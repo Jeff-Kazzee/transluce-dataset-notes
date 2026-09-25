@@ -47,8 +47,12 @@ Some reports on the same tasks seem to fall outside the dataset because the sear
 
 `results/claims.json` holds my output and the SHA-256 hash of every input.
 
-## Limits
+## How I checked
 
-"Not in the article" means I couldn't find it in my saved copy of the page. The page can change. On September 25, 2026, I searched news coverage, Hacker News, and the web and found no one else writing about these points. That doesn't prove no one has. I'm not affiliated with Transluce. If I got something wrong, open an issue.
+The dataset is Transluce's v5 package. I downloaded it on September 24, 2026, and all 15 files matched the SHA-256 hashes in its manifest. "Not in the article" means no match in my copy of the page, saved September 25, 2026.
+
+Before publishing, I read the SecurityWeek, CybelAngel, and XenoSpectrum coverage and the Hacker News discussion, which had about 258 comments. None of them covers these three points.
+
+I don't work for Transluce. Corrections go in the [issue tracker](https://github.com/Jeff-Kazzee/transluce-dataset-notes/issues).
 
 Code is MIT. Text is CC BY 4.0. By Jeff Kazzee.
