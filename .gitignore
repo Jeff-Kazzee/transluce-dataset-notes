@@ -1,0 +1,4 @@
+# Transluce's dataset and page are downloaded by the reader, not rehosted here.
+data/
+.env*
+__pycache__/

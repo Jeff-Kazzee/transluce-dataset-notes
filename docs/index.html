@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Transluce Dataset Notes</title>
+<meta name="description" content="Three reproducible findings from Transluce's public urlquery agent-activity dataset.">
+<style>
+:root{--bg:#fbfaf7;--fg:#1c1d1f;--muted:#5d6166;--line:#e3e0d8;--accent:#1f5fbf;--card:#ffffff;--code:#f1efe9}
+@media (prefers-color-scheme:dark){:root{--bg:#141517;--fg:#e8e6e1;--muted:#a3a6ab;--line:#2c2e31;--accent:#7aa7ff;--card:#1b1c1f;--code:#232528}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.6 ui-sans-serif,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:720px;margin:0 auto;padding:48px 16px 80px}
+h1{font-size:1.9rem;line-height:1.25;margin:0 0 12px}
+h2{font-size:1.25rem;margin:40px 0 8px}
+p,li{color:var(--fg)}
+.lede{color:var(--muted);font-size:1.05rem}
+a{color:var(--accent)}
+.stat{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0}
+.stat div{flex:1 1 150px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.stat b{display:block;font-size:1.5rem}
+.stat span{color:var(--muted);font-size:.9rem}
+code,pre{font-family:ui-monospace,Consolas,monospace;font-size:.88em;background:var(--code);border-radius:6px}
+code{padding:1px 5px}
+pre{padding:12px;overflow-x:auto}
+.note{border-left:3px solid var(--line);padding-left:14px;color:var(--muted)}
+footer{margin-top:56px;color:var(--muted);font-size:.9rem;border-top:1px solid var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+<main>
+<h1>Notes on Transluce's urlquery agent-activity dataset</h1>
+<p class="lede">Transluce <a href="https://transluce.org/agent-activity">published its report</a> on 2026-09-23 and asked readers to keep digging into the data. Here are three things we found in its public files. Every number comes from <a href="https://github.com/Jeff-Kazzee/transluce-dataset-notes/blob/main/scripts/verify_claims.py">one script</a> you can run yourself.</p>
+
+<h2>1. The federal budget PDF task is much larger than the article shows</h2>
+<p>The article mentions this task once. It notes that the wiki links to urlquery.net exactly once, on May 26, "pointing to a scan of a federal budget data PDF."</p>
+<div class="stat">
+<div><b>597</b><span>reports in the <code>MAX budget documents</code> bucket</span></div>
+<div><b>586</b><span>of them between May 24 and 27, 2026</span></div>
+<div><b>0</b><span>mentions of max.gov in the article</span></div>
+</div>
+<p>From what we checked, this looks like repeated retrieval of a budget execution PDF, not an attack.</p>
+
+<h2>2. Nearly a quarter of the included reports come from an outside catalog</h2>
+<div class="stat">
+<div><b>8,968</b><span>included reports marked as members of an "externally selected research-activity cohort"</span></div>
+<div><b>24%</b><span>of the 37,649 included reports</span></div>
+<div><b>229</b><span>of them included despite reason text that says "needs review"</span></div>
+</div>
+<p>The dataset's <code>methods.json</code> names the source: a "research activity explorer" at <code>research-activity-september-2026.tuxianeer.chatgpt.site</code>, dated 2026-09-21. All 8,968 reviewed urlquery rows in that explorer appear in the dataset. The article text never mentions the explorer. The credit is in the data files.</p>
+<p class="note">Every significant row that cites the cohort also lists other evidence. So this does not show that the significant set rests on the explorer alone. It does mean the dataset and the explorer are not independent sources.</p>
+
+<h2>3. The activity ran 57 days without a break</h2>
+<div class="stat">
+<div><b>57</b><span>consecutive UTC days with 10 or more included reports</span></div>
+<div><b>Apr 26 to Jun 21</b><span>then zero on June 22</span></div>
+<div><b>Sunday</b><span>the most active weekday since March 1. No weekend dip.</span></div>
+</div>
+<p>The article describes a May and June peak that collapses on June 22. The unbroken run and its start date are not in the text.</p>
+
+<h2>Open questions, not findings</h2>
+<p>Some reports on the same tasks may sit outside the dataset because the search patterns miss domain variants. For example, the pattern <code>*whssgr.com*</code> in <code>methods.json</code> does not match <code>whssgrgupkar.com</code>. Our counts for these come from urlquery search results and are not yet verified record by record.</p>
+
+<h2>Reproduce</h2>
+<pre>python scripts/verify_claims.py \
+  --dataset data/urlquery-agent-activity-2026-09-22-v5 \
+  --page data/agent-activity.txt \
+  --explorer data/tux_data.json</pre>
+<p>Download the dataset from Transluce's page and save the article text first. <a href="https://github.com/Jeff-Kazzee/transluce-dataset-notes/blob/main/results/claims.json"><code>results/claims.json</code></a> holds our output with SHA-256 hashes of every input.</p>
+
+<footer>
+<p>"Not in the article" means no match in our copy of the page text, saved 2026-09-25. We searched news coverage, Hacker News, and the web that day and found no prior write-up of these points. Absence of results does not prove nobody published them. We have no affiliation with Transluce. Corrections welcome as <a href="https://github.com/Jeff-Kazzee/transluce-dataset-notes/issues">issues</a>.</p>
+<p>By Jeff Kazzee. Code MIT, text CC BY 4.0.</p>
+</footer>
+</main>
+</body>
+</html>

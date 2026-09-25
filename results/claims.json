@@ -1,0 +1,57 @@
+{
+  "inputs": {
+    "all-reports.csv": "64c59f7ffa31d08f1c66fd274953cf21d446ca18aca04d3a614208639fbf6eb8",
+    "report-sources.csv": "d92acb400b845bb10de669f8a04e0be06813085e6e5c71d0d35e64734e68fb67",
+    "page_text": "b82ec342e6d313384c44bbf1abac993114638684579aedeb4e57472869a57908",
+    "explorer": "cf6ea4adf6126c0aeb4c76e4d7bd35ba410c6cad0388d790ab413f3fd9ec25b6"
+  },
+  "max_budget_documents": {
+    "source_bucket": "MAX budget documents",
+    "reports": 597,
+    "reports_2026_05_24_to_27": 586,
+    "confidence_in_window": {
+      "suggestive": 584,
+      "significant": 2
+    },
+    "page_mentions_max_gov": 0
+  },
+  "external_cohort": {
+    "rows_citing_external_cohort": 8968,
+    "cohort_confidence": {
+      "suggestive": 2649,
+      "significant": 6319
+    },
+    "included_cohort_rows_with_needs_review_reason": 229,
+    "needs_review_rows_by_confidence": {
+      "suggestive": 116,
+      "significant": 113
+    },
+    "significant_rows_total": 6467,
+    "significant_rows_citing_cohort": 6319,
+    "example_needs_review_ids": [
+      "00057e32-1557-4fee-9a66-16ed47f84498",
+      "0119b601-b914-4502-9589-2f73cc9b2317",
+      "01b31e2d-037e-457f-9f69-e15e5dfb5e83",
+      "034b9654-d200-4f7e-846d-a04a96b53bdb",
+      "05beb35d-f2b4-4678-b54d-cb682d2d9060"
+    ],
+    "explorer_updated": "September 21, 2026",
+    "explorer_reviewed_urlquery_rows": 8968,
+    "explorer_reviewed_rows_in_transluce_cohort": 8968
+  },
+  "continuous_run": {
+    "longest_run_days_with_10_plus_reports": 57,
+    "run_start": "2026-04-26",
+    "run_end": "2026-06-21",
+    "reports_on_day_after_run": 0,
+    "active_days_by_weekday_since_2026_03_01": {
+      "Sun": 19,
+      "Thu": 15,
+      "Fri": 17,
+      "Mon": 16,
+      "Tue": 12,
+      "Wed": 14,
+      "Sat": 14
+    }
+  }
+}
